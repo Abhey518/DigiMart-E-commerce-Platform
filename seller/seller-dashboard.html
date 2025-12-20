@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Seller Dashboard — DigiMart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: #f8fafc;
+      color: var(--text);
+    }
+
+    /* Top Navigation Bar */
+    .seller-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .seller-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .seller-brand .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+    }
+
+    .seller-nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .seller-nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .seller-nav a:hover {
+      color: var(--primary);
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(14, 165, 164, 0.2);
+    }
+
+    .user-icon:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(14,165,164,0.3);
+    }
+
+    .user-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 50px;
+      background: white;
+      min-width: 220px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.12);
+      z-index: 1001;
+      overflow: hidden;
+    }
+
+    .user-dropdown.active {
+      display: block;
+    }
+
+    .user-info {
+      padding: 16px;
+      border-bottom: 1px solid #e6eef0;
+      background: linear-gradient(135deg, rgba(14,165,164,0.05), rgba(6,182,212,0.05));
+    }
+
+    .user-info .user-email {
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .user-info .user-role {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .user-dropdown a {
+      display: block;
+      padding: 12px 16px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+      font-weight: 400;
+    }
+
+    .user-dropdown a:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .user-dropdown a.logout {
+      color: #dc2626;
+      border-top: 1px solid #e6eef0;
+      font-weight: 400;
+    }
+
+    /* Sidebar */
+    .dashboard-container {
+      display: flex;
+      min-height: calc(100vh - 81px);
+      background: #f8fafc;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: white;
+      border-right: 1px solid #e2e8f0;
+      padding: 32px 0;
+      position: sticky;
+      top: 81px;
+      height: calc(100vh - 81px);
+      overflow-y: auto;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.02);
+    }
+
+    .sidebar-section {
+      margin-bottom: 32px;
+    }
+
+    .sidebar-title {
+      padding: 0 24px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar a {
+      padding: 14px 24px;
+      color: #475569;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      margin: 2px 0;
+    }
+
+    .sidebar a:hover {
+      background-color: #f1f5f9;
+      color: var(--primary);
+      padding-left: 28px;
+    }
+
+    .sidebar a.active {
+      background-color: #ecfeff;
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .sidebar a span {
+      font-size: 1.2rem;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 40px 48px;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .dashboard-header {
+      margin-bottom: 36px;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .dashboard-header p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .stat-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .stat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .stat-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+      letter-spacing: -1px;
+    }
+
+    .stat-label {
+      color: #64748b;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .dashboard-section {
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px;
+      background: #f8fafc;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    td {
+      padding: 12px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-completed { background: #d1fae5; color: #065f46; }
+    .status-processing { background: #dbeafe; color: #1e40af; }
+
+    /* Button improvements */
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(14, 165, 164, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(14, 165, 164, 0.3);
+    }
+
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 40px;
+      color: #94a3b8;
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-state-text {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    /* Product Form Styles */
+    .product-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #0f172a;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(14, 165, 164, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    /* Product List Styles */
+    .products-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateX(4px);
+    }
+
+    .product-image {
+      width: 140px;
+      min-width: 140px;
+      height: 140px;
+      object-fit: cover;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: #cbd5e1;
+      flex-shrink: 0;
+    }
+
+    .product-info {
+      padding: 12px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .product-details {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .product-main-info {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .product-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .product-category {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 0;
+    }
+
+    .product-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+
+    .product-stock {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+
+    .product-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 0;
+      flex-shrink: 0;
+    }
+
+    .btn-small {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-edit {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .btn-edit:hover {
+      background: #bfdbfe;
+    }
+
+    .btn-delete {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .btn-delete:hover {
+      background: #fecaca;
+    }
+
+    .no-products {
+      text-align: center;
+      padding: 60px 20px;
+      color: #94a3b8;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 24px 32px;
+      border-bottom: 2px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #64748b;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .modal-body {
+      padding: 32px;
+    }
+
+    /* Product card enhancements */
+    .product-stats {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 0;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      color: #475569;
+    }
+
+    .stat-icon {
+      font-size: 1rem;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .stars {
+      color: #fbbf24;
+      font-size: 0.9rem;
+    }
+
+    .rating-text {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    /* Settings Form Styles */
+    .settings-form {
+      display: grid;
+      gap: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #0f172a;
+      font-size: 0.9rem;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      padding: 12px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(14, 165, 164, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--primary);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .toggle-label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .toggle-title {
+      font-weight: 600;
+      color: #0f172a;
+      font-size: 0.95rem;
+    }
+
+    .toggle-description {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 1024px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 16px 0;
+      }
+
+      .sidebar-section {
+        margin-bottom: 0;
+      }
+
+      .sidebar a {
+        padding: 12px 20px;
+      }
+
+      .main-content {
+        padding: 24px 20px;
+      }
+
+      .stat-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .seller-header {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .seller-nav {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 0.85rem;
+        align-items: center;
+      }
+
+      .user-dropdown {
+        right: -10px;
+      }
+
+      .dashboard-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .dashboard-section {
+        padding: 20px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .products-grid {
+        gap: 12px;
+      }
+
+      .product-card {
+        flex-direction: column;
+      }
+
+      .product-info {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .product-details {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .product-actions {
+        flex-direction: row;
+      }
+
+      .btn-small {
+        flex: 1;
+      }
+
+      .product-image {
+        width: 100%;
+        height: 180px;
+      }
+
+      .modal-content {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .modal-body {
+        padding: 20px;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+
+      .quick-actions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .seller-brand .logo {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+      }
+
+      .stat-card {
+        padding: 20px;
+      }
+
+      .stat-value {
+        font-size: 1.8rem;
+      }
+
+      .stat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.4rem;
+      }
+
+      .product-actions {
+        flex-direction: column;
+      }
+
+      .btn-small {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Navigation -->
+  <div class="seller-header">
+    <div class="seller-brand">
+      <div class="logo">DM</div>
+      <div>
+        <div style="font-weight:800; font-size:1.1rem;">DigiMart Seller</div>
+        <div style="font-size:0.8rem; color:var(--muted);">Seller Dashboard</div>
+      </div>
+    </div>
+    <div class="seller-nav">
+      <a href="#" id="viewShopLink">View Shop</a>
+      <div class="user-menu">
+        <div class="user-icon" id="userIcon" onclick="toggleUserDropdown()">
+          <span id="userInitial">U</span>
+        </div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-info">
+            <div class="user-email" id="userEmailDisplay">seller@example.com</div>
+            <div class="user-role">Seller Account</div>
+          </div>
+          <a href="../products.html">User Account</a>
+          <a href="../user/account-settings.html">Account Settings</a>
+          <a href="#" class="logout" onclick="logoutSeller(); return false;">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Main</div>
+        <a href="#" class="active" onclick="showSection('overview'); return false;">
+          <span>📊</span> Overview
+        </a>
+        <a href="#" onclick="showSection('products'); return false;">
+          <span>📦</span> Products
+        </a>
+        <a href="#" onclick="showSection('orders'); return false;">
+          <span>🛒</span> Orders
+        </a>
+      </div>
+      
+      <div class="sidebar-section">
+        <div class="sidebar-title">Shop</div>
+        <a href="#" onclick="showSection('shop-settings'); return false;">
+          <span>⚙️</span> Shop Settings
+        </a>
+        <a href="#" onclick="showSection('analytics'); return false;">
+          <span>📈</span> Analytics
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Overview Section -->
+      <div id="overview" class="content-section active">
+        <div class="dashboard-header">
+          <h1>Dashboard Overview</h1>
+          <p class="small" style="color:var(--muted);">Welcome back! Here's what's happening with your shop today.</p>
+        </div>
+
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-value" id="totalRevenue">Rs. 0</div>
+                <div class="stat-label">Total Revenue</div>
+              </div>
+              <div class="stat-icon" style="background:#d1fae5; color:#065f46;">💰</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-value" id="totalProducts">0</div>
+                <div class="stat-label">Products Listed</div>
+              </div>
+              <div class="stat-icon" style="background:#dbeafe; color:#1e40af;">📦</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-value" id="totalOrders">0</div>
+                <div class="stat-label">Total Orders</div>
+              </div>
+              <div class="stat-icon" style="background:#fef3c7; color:#92400e;">🛒</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-value" id="pendingOrders">0</div>
+                <div class="stat-label">Pending Orders</div>
+              </div>
+              <div class="stat-icon" style="background:#fecaca; color:#991b1b;">⏳</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Recent Orders</h3>
+            <button class="btn-primary" onclick="showSection('orders'); return false;">View All</button>
+          </div>
+          <div id="recentOrdersTable"></div>
+        </div>
+
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Quick Actions</h3>
+          </div>
+          <div class="quick-actions-grid">
+            <button class="btn-primary" onclick="showSection('products'); return false;">📦 Add Product</button>
+            <button class="btn-primary" onclick="showSection('shop-settings'); return false;">⚙️ Edit Shop Info</button>
+            <button class="btn-primary" onclick="window.location.href='shop.html?id=shop-' + getUserShopId()">🏪 View My Shop</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      <div id="products" class="content-section">
+        <div class="dashboard-header">
+          <h1>Manage Products</h1>
+          <p class="small" style="color:var(--muted);">Add, edit, and manage your product listings</p>
+        </div>
+
+        <!-- Products List -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Your Products</h3>
+            <div style="display:flex; align-items:center; gap:16px;">
+              <span style="color:#64748b; font-size:0.9rem;" id="productCount">0 products</span>
+              <button class="btn-secondary" onclick="clearAllProducts()" style="padding:8px 16px; font-size:0.85rem;">
+                🗑️ Clear All
+              </button>
+              <button class="btn-primary" onclick="openProductModal()">
+                <span style="font-size:1.1rem;">➕</span> Add New Product
+              </button>
+            </div>
+          </div>
+          
+          <div id="productsContainer">
+            <div class="no-products">
+              <div style="font-size:3rem; margin-bottom:16px;">📦</div>
+              <p>No products yet. Click "Add New Product" to get started!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Modal -->
+      <div id="productModal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <div class="modal-header">
+            <h2 id="modalTitle">Add New Product</h2>
+            <button class="modal-close" onclick="closeProductModal()">×</button>
+          </div>
+          <div class="modal-body">
+            <form id="productForm" class="product-form" onsubmit="saveProduct(event)">
+              <div class="form-group">
+                <label for="productName">Product Name *</label>
+                <input type="text" id="productName" placeholder="Enter product name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="productCategory">Category *</label>
+                <select id="productCategory" required>
+                  <option value="">Select category</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Fashion">Fashion</option>
+                  <option value="Home & Living">Home & Living</option>
+                  <option value="Books">Books</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Toys">Toys</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="productPrice">Price (Rs.) *</label>
+                <input type="number" id="productPrice" placeholder="0.00" step="0.01" min="0" required>
+              </div>
+
+              <div class="form-group">
+                <label for="productStock">Stock Quantity *</label>
+                <input type="number" id="productStock" placeholder="0" min="0" required>
+              </div>
+
+              <div class="form-group">
+                <label for="productImage">Image URL</label>
+                <input type="url" id="productImage" placeholder="https://example.com/image.jpg">
+              </div>
+
+              <div class="form-group">
+                <label for="productSKU">SKU (Optional)</label>
+                <input type="text" id="productSKU" placeholder="e.g., PROD-001">
+              </div>
+
+              <div class="form-group full-width">
+                <label for="productDescription">Description *</label>
+                <textarea id="productDescription" placeholder="Enter product description" required></textarea>
+              </div>
+
+              <input type="hidden" id="editProductId">
+
+              <div class="form-actions full-width">
+                <button type="button" class="btn-secondary" onclick="closeProductModal()">Cancel</button>
+                <button type="submit" class="btn-primary" id="submitBtn">Add Product</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Section -->
+      <div id="orders" class="content-section">
+        <div class="dashboard-header">
+          <h1>Orders</h1>
+          <p class="small" style="color:var(--muted);">Manage and fulfill your orders</p>
+        </div>
+
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">All Orders</h3>
+          </div>
+          <div class="empty-state">
+            <div class="empty-state-icon">🛒</div>
+            <p class="empty-state-text">No order history</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shop Settings Section -->
+      <div id="shop-settings" class="content-section">
+        <div class="dashboard-header">
+          <h1>Shop Settings</h1>
+          <p class="small" style="color:var(--muted);">Update your shop information and preferences</p>
+        </div>
+
+        <!-- Shop Information -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Shop Information</h3>
+          </div>
+          <form class="settings-form" id="shopInfoForm">
+            <div class="form-group">
+              <label class="form-label">Shop Name *</label>
+              <input type="text" class="form-input" id="shopName" placeholder="Enter your shop name" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Shop Category *</label>
+              <select class="form-select" id="shopCategory" required>
+                <option value="">Select category</option>
+                <option value="electronics">Electronics</option>
+                <option value="fashion">Fashion & Apparel</option>
+                <option value="home">Home & Living</option>
+                <option value="beauty">Beauty & Personal Care</option>
+                <option value="sports">Sports & Outdoors</option>
+                <option value="books">Books & Media</option>
+                <option value="toys">Toys & Games</option>
+                <option value="food">Food & Beverages</option>
+                <option value="automotive">Automotive</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Shop Description *</label>
+              <textarea class="form-textarea" id="shopDescription" placeholder="Tell customers about your shop..." required></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Shop Logo URL</label>
+                <input type="url" class="form-input" id="shopLogo" placeholder="https://example.com/logo.jpg">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Shop Banner URL</label>
+                <input type="url" class="form-input" id="shopBanner" placeholder="https://example.com/banner.jpg">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary">Cancel</button>
+              <button type="submit" class="btn-primary">Save Shop Info</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Business Details -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Business Details</h3>
+          </div>
+          <form class="settings-form" id="businessDetailsForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Business Email *</label>
+                <input type="email" class="form-input" id="businessEmail" placeholder="business@example.com" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Business Phone *</label>
+                <input type="tel" class="form-input" id="businessPhone" placeholder="+1 (555) 123-4567" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Business Address *</label>
+              <input type="text" class="form-input" id="businessAddress" placeholder="Street address" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">City *</label>
+                <input type="text" class="form-input" id="businessCity" placeholder="City" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">State/Province *</label>
+                <input type="text" class="form-input" id="businessState" placeholder="State" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">ZIP/Postal Code *</label>
+                <input type="text" class="form-input" id="businessZip" placeholder="12345" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Country *</label>
+                <input type="text" class="form-input" id="businessCountry" placeholder="Country" required>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary">Cancel</button>
+              <button type="submit" class="btn-primary">Save Business Details</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Payment Settings -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Payment Settings</h3>
+          </div>
+          <form class="settings-form" id="paymentSettingsForm">
+            <div class="form-group">
+              <label class="form-label">Account Holder Name *</label>
+              <input type="text" class="form-input" id="accountHolder" placeholder="Full name on bank account" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Bank Name *</label>
+                <input type="text" class="form-input" id="bankName" placeholder="Bank name" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Account Number *</label>
+                <input type="text" class="form-input" id="accountNumber" placeholder="••••••1234" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Routing Number</label>
+                <input type="text" class="form-input" id="routingNumber" placeholder="123456789">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Swift/BIC Code</label>
+                <input type="text" class="form-input" id="swiftCode" placeholder="AAAA-BB-CC-123">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary">Cancel</button>
+              <button type="submit" class="btn-primary">Save Payment Settings</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Notification Preferences -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Notification Preferences</h3>
+          </div>
+          
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-title">Email Notifications</span>
+              <span class="toggle-description">Receive email updates for new orders and messages</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="emailNotifications" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-title">Order Notifications</span>
+              <span class="toggle-description">Get notified when you receive new orders</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="orderNotifications" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-title">Low Stock Alerts</span>
+              <span class="toggle-description">Alert when product stock is running low</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="lowStockAlerts" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-title">Marketing Emails</span>
+              <span class="toggle-description">Receive tips and updates about selling on DigiMart</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="marketingEmails">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-primary" onclick="saveNotificationSettings()">Save Preferences</button>
+          </div>
+        </div>
+
+        <!-- Shop Status -->
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Shop Status</h3>
+          </div>
+          
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-title">Shop is Active</span>
+              <span class="toggle-description">Your shop and products are visible to customers</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="shopActive" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-title">Vacation Mode</span>
+              <span class="toggle-description">Temporarily pause orders while you're away</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="vacationMode">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-primary" onclick="saveShopStatus()">Save Status</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Section -->
+      <div id="analytics" class="content-section">
+        <div class="dashboard-header">
+          <h1>Analytics</h1>
+          <p class="small" style="color:var(--muted);">Track your shop's performance and growth</p>
+        </div>
+
+        <div class="dashboard-section">
+          <div class="section-header">
+            <h3 class="section-title">Performance Metrics</h3>
+          </div>
+          <div class="empty-state">
+            <div class="empty-state-icon">📈</div>
+            <p class="empty-state-text">No analytics data available</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/products.js"></script>
+  <script src="../js/user-data.js"></script>
+  <script>
+    // Initialize user info in header
+    function initializeUserInfo() {
+      const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+      if (currentUser.email) {
+        const initial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : currentUser.email.charAt(0).toUpperCase();
+        document.getElementById('userInitial').textContent = initial;
+        document.getElementById('userEmailDisplay').textContent = currentUser.email;
+      }
+
+      // Set up View Shop link
+      const viewShopLink = document.getElementById('viewShopLink');
+      if (viewShopLink) {
+        viewShopLink.onclick = function(e) {
+          e.preventDefault();
+          // Navigate to shop preview page
+          window.location.href = 'shop-preview.html?seller=' + encodeURIComponent(currentUser.email);
+        };
+      }
+    }
+
+    // Toggle user dropdown
+    function toggleUserDropdown() {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('active');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const userMenu = event.target.closest('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      
+      if (!userMenu && dropdown) {
+        dropdown.classList.remove('active');
+      }
+    });
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeUserInfo();
+    });
+
+    // Original script content
+  </script>
+  <script>
+    // Check if user is a seller
+    window.addEventListener('DOMContentLoaded', function() {
+      const userData = getUserData();
+      if (!userData.isSeller) {
+        alert('Access denied. You need a seller account to access this page.');
+        window.location.href = '../user/account-settings.html';
+        return;
+      }
+
+      loadDashboardData();
+      
+      // Load products initially if on products section
+      setTimeout(() => {
+        const productsSection = document.getElementById('products');
+        if (productsSection && productsSection.classList.contains('active')) {
+          loadProducts();
+        }
+      }, 100);
+    });
+
+    function showSection(sectionId, clickedElement) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // Remove active class from all sidebar links
+      document.querySelectorAll('.sidebar a').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      // Show selected section
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.add('active');
+      }
+
+      // Set active sidebar link - find the link that was clicked
+      const clickedLink = event ? event.target.closest('a') : null;
+      if (clickedLink) {
+        clickedLink.classList.add('active');
+      }
+    }
+
+    function loadDashboardData() {
+      // Placeholder stats (will be replaced with real data from backend)
+      document.getElementById('totalRevenue').textContent = 'Rs. 125,000';
+      document.getElementById('totalProducts').textContent = '24';
+      document.getElementById('totalOrders').textContent = '156';
+      document.getElementById('pendingOrders').textContent = '5';
+
+      // Load recent orders
+      const recentOrdersDiv = document.getElementById('recentOrdersTable');
+      recentOrdersDiv.innerHTML = '<div class="empty-state" style="padding:30px;"><div class="empty-state-icon" style="font-size:2.5rem;">📋</div><p class="empty-state-text">No recent orders</p></div>';
+    }
+
+    function getUserShopId() {
+      // Placeholder function (will get actual shop ID from backend)
+      return '1';
+    }
+
+    function logoutSeller() {
+      if (confirm('Are you sure you want to logout?')) {
+        sessionStorage.removeItem('digimartLoggedIn');
+        sessionStorage.removeItem('digimartUserEmail');
+        window.location.href = '../index.html';
+      }
+    }
+
+    // ========== Product Management Functions ==========
+    
+    function getSellerProducts() {
+      const userData = getUserData();
+      const email = userData.email || sessionStorage.getItem('digimartUserEmail');
+      const key = `sellerProducts_${email}`;
+      return JSON.parse(localStorage.getItem(key)) || [];
+    }
+
+    function setSellerProducts(products) {
+      const userData = getUserData();
+      const email = userData.email || sessionStorage.getItem('digimartUserEmail');
+      const key = `sellerProducts_${email}`;
+      localStorage.setItem(key, JSON.stringify(products));
+    }
+
+    function saveProduct(event) {
+      event.preventDefault();
+      
+      const productId = document.getElementById('editProductId').value;
+      let products = getSellerProducts();
+      const existingProduct = products.find(p => p.id === productId);
+      
+      const product = {
+        id: productId || 'prod_' + Date.now(),
+        name: document.getElementById('productName').value,
+        category: document.getElementById('productCategory').value,
+        price: parseFloat(document.getElementById('productPrice').value),
+        stock: parseInt(document.getElementById('productStock').value),
+        image: document.getElementById('productImage').value || 'https://via.placeholder.com/400x300?text=No+Image',
+        sku: document.getElementById('productSKU').value || '',
+        description: document.getElementById('productDescription').value,
+        sold: existingProduct ? existingProduct.sold : 0,
+        rating: existingProduct ? existingProduct.rating : 0,
+        reviewCount: existingProduct ? existingProduct.reviewCount : 0,
+        createdAt: existingProduct ? existingProduct.createdAt : new Date().toISOString()
+      };
+      
+      if (productId && existingProduct) {
+        // Edit existing product
+        const index = products.findIndex(p => p.id === productId);
+        if (index !== -1) {
+          products[index] = product;
+        }
+      } else {
+        // Add new product
+        products.push(product);
+      }
+
+      setSellerProducts(products);
+      closeProductModal();
+      loadProducts();
+      
+      const message = productId ? 'Product updated successfully!' : 'Product added successfully!';
+      alert(message);
+    }
+
+    function loadProducts() {
+      const products = getSellerProducts();
+      const container = document.getElementById('productsContainer');
+      const countElement = document.getElementById('productCount');
+      
+      console.log('Loading products:', products); // Debug log
+      
+      countElement.textContent = `${products.length} product${products.length !== 1 ? 's' : ''}`;
+      
+      // Update stat card
+      document.getElementById('totalProducts').textContent = products.length;
+
+      if (products.length === 0) {
+        container.innerHTML = `
+          <div class="no-products">
+            <div style="font-size:3rem; margin-bottom:16px;">📦</div>
+            <p>No products yet. Click "Add New Product" to get started!</p>
+          </div>
+        `;
+        return;
+      }
+
+      const productsHTML = products.map(product => {
+        const rating = product.rating || 0;
+        const reviewCount = product.reviewCount || 0;
+        const sold = product.sold || 0;
+        const stars = '⭐'.repeat(Math.round(rating));
+        
+        return `
+        <div class="product-card">
+          <div class="product-image" style="${product.image && product.image !== 'https://via.placeholder.com/400x300?text=No+Image' ? `background-image:url('../${product.image}'); background-size:cover; background-position:center;` : ''}">
+            ${!product.image || product.image === 'https://drive.google.com/file/d/12yk_StHtdENnMGfP0A_E_1PhzwhKVotN/view?usp=sharing' ? '📦' : ''}
+          </div>
+          <div class="product-info">
+            <div class="product-details">
+              <div class="product-main-info">
+                <div class="product-name">${product.name}</div>
+                <div class="product-category">${product.category}</div>
+                ${product.sku ? `<div class="product-stock" style="margin-top:4px; font-size:0.8rem;">SKU: ${product.sku}</div>` : ''}
+              </div>
+              
+              <div class="product-price">Rs. ${product.price.toFixed(2)}</div>
+              
+              <div class="product-stats">
+                <div class="stat-item">
+                  <span class="stat-icon">📊</span>
+                  <span><strong>${sold}</strong> sold</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-icon">📦</span>
+                  <span><strong>${product.stock}</strong> stock</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="product-actions">
+              <button class="btn-small btn-edit" onclick="editProduct('${product.id}')">✏️ Edit</button>
+              <button class="btn-small btn-delete" onclick="deleteProduct('${product.id}')">🗑️ Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+      }).join('');
+      
+      container.innerHTML = '<div class="products-grid">' + productsHTML + '</div>';
+      console.log('Products rendered'); // Debug log
+    }
+
+    function editProduct(productId) {
+      const products = getSellerProducts();
+      const product = products.find(p => p.id === productId);
+      
+      if (!product) return;
+
+      // Populate form
+      document.getElementById('productName').value = product.name;
+      document.getElementById('productCategory').value = product.category;
+      document.getElementById('productPrice').value = product.price;
+      document.getElementById('productStock').value = product.stock;
+      document.getElementById('productImage').value = product.image === 'https://via.placeholder.com/400x300?text=No+Image' ? '' : product.image;
+      document.getElementById('productSKU').value = product.sku;
+      document.getElementById('productDescription').value = product.description;
+      document.getElementById('editProductId').value = product.id;
+
+      // Update UI
+      document.getElementById('modalTitle').textContent = 'Edit Product';
+      document.getElementById('submitBtn').textContent = 'Update Product';
+      
+      // Open modal
+      openProductModal();
+    }
+
+    function openProductModal() {
+      document.getElementById('productModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('active');
+      document.body.style.overflow = '';
+      resetProductForm();
+    }
+
+    function closeModalOnOverlay(event) {
+      if (event.target === event.currentTarget) {
+        closeProductModal();
+      }
+    }
+
+    function deleteProduct(productId) {
+      if (!confirm('Are you sure you want to delete this product?')) return;
+
+      let products = getSellerProducts();
+      products = products.filter(p => p.id !== productId);
+      setSellerProducts(products);
+      loadProducts();
+    }
+
+    function clearAllProducts() {
+      if (!confirm('Are you sure you want to delete ALL products? This cannot be undone!')) return;
+      
+      const userData = getUserData();
+      const email = userData.email || sessionStorage.getItem('digimartUserEmail');
+      const key = `sellerProducts_${email}`;
+      localStorage.removeItem(key);
+      loadProducts();
+      alert('All products cleared!');
+    }
+
+    function resetProductForm() {
+      document.getElementById('productForm').reset();
+      document.getElementById('editProductId').value = '';
+      document.getElementById('modalTitle').textContent = 'Add New Product';
+      document.getElementById('submitBtn').textContent = 'Add Product';
+    }
+
+    // Override showSection to load products when switching to products section
+    (function() {
+      const originalShowSection = window.showSection;
+      window.showSection = function(sectionId) {
+        if (typeof originalShowSection === 'function') {
+          originalShowSection.call(this, sectionId);
+        }
+        if (sectionId === 'products') {
+          setTimeout(() => loadProducts(), 50);
+        }
+        if (sectionId === 'shop-settings') {
+          loadShopSettings();
+        }
+      };
+    })();
+
+    // Shop Settings Functions
+    function loadShopSettings() {
+      const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+      const settingsKey = `shopSettings_${currentUser.email}`;
+      const settings = JSON.parse(localStorage.getItem(settingsKey) || '{}');
+
+      // Load shop info
+      if (settings.shopInfo) {
+        document.getElementById('shopName').value = settings.shopInfo.name || '';
+        document.getElementById('shopCategory').value = settings.shopInfo.category || '';
+        document.getElementById('shopDescription').value = settings.shopInfo.description || '';
+        document.getElementById('shopLogo').value = settings.shopInfo.logo || '';
+        document.getElementById('shopBanner').value = settings.shopInfo.banner || '';
+      }
+
+      // Load business details
+      if (settings.businessDetails) {
+        document.getElementById('businessEmail').value = settings.businessDetails.email || '';
+        document.getElementById('businessPhone').value = settings.businessDetails.phone || '';
+        document.getElementById('businessAddress').value = settings.businessDetails.address || '';
+        document.getElementById('businessCity').value = settings.businessDetails.city || '';
+        document.getElementById('businessState').value = settings.businessDetails.state || '';
+        document.getElementById('businessZip').value = settings.businessDetails.zip || '';
+        document.getElementById('businessCountry').value = settings.businessDetails.country || '';
+      }
+
+      // Load payment settings
+      if (settings.paymentSettings) {
+        document.getElementById('accountHolder').value = settings.paymentSettings.accountHolder || '';
+        document.getElementById('bankName').value = settings.paymentSettings.bankName || '';
+        document.getElementById('accountNumber').value = settings.paymentSettings.accountNumber || '';
+        document.getElementById('routingNumber').value = settings.paymentSettings.routingNumber || '';
+        document.getElementById('swiftCode').value = settings.paymentSettings.swiftCode || '';
+      }
+
+      // Load notification preferences
+      if (settings.notifications) {
+        document.getElementById('emailNotifications').checked = settings.notifications.email !== false;
+        document.getElementById('orderNotifications').checked = settings.notifications.orders !== false;
+        document.getElementById('lowStockAlerts').checked = settings.notifications.lowStock !== false;
+        document.getElementById('marketingEmails').checked = settings.notifications.marketing || false;
+      }
+
+      // Load shop status
+      if (settings.shopStatus) {
+        document.getElementById('shopActive').checked = settings.shopStatus.active !== false;
+        document.getElementById('vacationMode').checked = settings.shopStatus.vacation || false;
+      }
+    }
+
+    function saveShopSettings(section, data) {
+      const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+      const settingsKey = `shopSettings_${currentUser.email}`;
+      const settings = JSON.parse(localStorage.getItem(settingsKey) || '{}');
+      
+      settings[section] = data;
+      localStorage.setItem(settingsKey, JSON.stringify(settings));
+    }
+
+    // Form submit handlers
+    document.getElementById('shopInfoForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('shopName').value,
+        category: document.getElementById('shopCategory').value,
+        description: document.getElementById('shopDescription').value,
+        logo: document.getElementById('shopLogo').value,
+        banner: document.getElementById('shopBanner').value
+      };
+      saveShopSettings('shopInfo', data);
+      alert('Shop information saved successfully!');
+    });
+
+    document.getElementById('businessDetailsForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        email: document.getElementById('businessEmail').value,
+        phone: document.getElementById('businessPhone').value,
+        address: document.getElementById('businessAddress').value,
+        city: document.getElementById('businessCity').value,
+        state: document.getElementById('businessState').value,
+        zip: document.getElementById('businessZip').value,
+        country: document.getElementById('businessCountry').value
+      };
+      saveShopSettings('businessDetails', data);
+      alert('Business details saved successfully!');
+    });
+
+    document.getElementById('paymentSettingsForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        accountHolder: document.getElementById('accountHolder').value,
+        bankName: document.getElementById('bankName').value,
+        accountNumber: document.getElementById('accountNumber').value,
+        routingNumber: document.getElementById('routingNumber').value,
+        swiftCode: document.getElementById('swiftCode').value
+      };
+      saveShopSettings('paymentSettings', data);
+      alert('Payment settings saved successfully!');
+    });
+
+    function saveNotificationSettings() {
+      const data = {
+        email: document.getElementById('emailNotifications').checked,
+        orders: document.getElementById('orderNotifications').checked,
+        lowStock: document.getElementById('lowStockAlerts').checked,
+        marketing: document.getElementById('marketingEmails').checked
+      };
+      saveShopSettings('notifications', data);
+      alert('Notification preferences saved successfully!');
+    }
+
+    function saveShopStatus() {
+      const data = {
+        active: document.getElementById('shopActive').checked,
+        vacation: document.getElementById('vacationMode').checked
+      };
+      saveShopSettings('shopStatus', data);
+      alert('Shop status updated successfully!');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Account Settings — DigiMart</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="../index.html">
+      <div class="logo">DM</div><div><div style="font-weight:800">DigiMart</div></div>
+    </a>
+    <nav class="nav">
+      <a href="../products.html">Products</a>
+      <a href="../shops.html">Shops</a>
+      <a class="cta" href="../cart.html">Cart (<span class="cart-count">0</span>)</a>
+      
+      <!-- User Account Menu -->
+      <div class="user-menu">
+        <div class="user-icon" onclick="toggleUserMenu()" id="userIcon">U</div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-info">
+            <div class="user-email" id="displayEmail">user@example.com</div>
+            <div class="user-role">Customer</div>
+          </div>
+          <a href="account-settings.html">Account Settings</a>
+          <a href="my-orders.html">My Orders</a>
+          <a href="wishlist.html">Wishlist</a>
+          <a href="#" class="logout" onclick="logoutUser(); return false;">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Account Settings</h2>
+    <p class="small" style="color:var(--muted); margin-bottom:32px;">Manage your profile information and preferences</p>
+
+    <div class="card" style="padding:32px; max-width:800px;">
+      <form id="accountForm" onsubmit="saveAccountSettings(event)">
+        
+        <!-- Personal Information -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Personal Information</h3>
+          
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="your.email@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Contact Number</label>
+            <input type="tel" id="phone" placeholder="+94 XX XXX XXXX" required>
+          </div>
+        </div>
+
+        <!-- Address Information -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Delivery Address</h3>
+          
+          <div class="form-group">
+            <label for="address">Street Address</label>
+            <input type="text" id="address" placeholder="Enter your street address" required>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" placeholder="City" required>
+            </div>
+
+            <div class="form-group">
+              <label for="province">Province</label>
+              <select id="province" required>
+                <option value="">Select Province</option>
+                <option value="Western">Western</option>
+                <option value="Central">Central</option>
+                <option value="Southern">Southern</option>
+                <option value="Northern">Northern</option>
+                <option value="Eastern">Eastern</option>
+                <option value="North Western">North Western</option>
+                <option value="North Central">North Central</option>
+                <option value="Uva">Uva</option>
+                <option value="Sabaragamuwa">Sabaragamuwa</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="postalCode">Postal Code</label>
+              <input type="text" id="postalCode" placeholder="10000" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Payment Method</h3>
+          
+          <div class="form-group">
+            <label for="paymentMethod">Preferred Payment Method</label>
+            <select id="paymentMethod" required>
+              <option value="">Select Payment Method</option>
+              <option value="Cash on Delivery">Cash on Delivery</option>
+              <option value="Credit/Debit Card">Credit/Debit Card</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Mobile Payment">Mobile Payment (eZ Cash, mCash)</option>
+            </select>
+          </div>
+
+          <div id="cardDetails" style="display:none;">
+            <div class="form-group">
+              <label for="cardNumber">Card Number</label>
+              <input type="text" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:16px;">
+              <div class="form-group">
+                <label for="cardExpiry">Expiry Date</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+              </div>
+
+              <div class="form-group">
+                <label for="cardCVV">CVV</label>
+                <input type="text" id="cardCVV" placeholder="XXX" maxlength="3">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seller Account Section -->
+        <div style="margin-bottom:32px;" id="sellerSection">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Seller Account</h3>
+          
+          <div id="notSellerView" style="background:#f0fdfa; border:2px solid #0ea5a4; border-radius:12px; padding:24px;">
+            <div style="display:flex; align-items:start; gap:16px;">
+              <div style="font-size:2.5rem;">🛍️</div>
+              <div style="flex:1;">
+                <h4 style="margin:0 0 8px 0; color:#0f172a;">Start Selling on DigiMart</h4>
+                <p style="margin:0 0 16px 0; color:#64748b; line-height:1.6;">
+                  Join thousands of sellers and grow your business on DigiMart. Reach more customers, manage your products, and track your sales all in one place.
+                </p>
+                <ul style="margin:0 0 20px 0; padding-left:20px; color:#64748b; line-height:1.8;">
+                  <li>Create your own shop page</li>
+                  <li>List unlimited products</li>
+                  <li>Manage orders and inventory</li>
+                  <li>Get insights and analytics</li>
+                </ul>
+                <button type="button" class="btn" onclick="window.location.href='../seller/seller-application.html'" style="margin:0;">
+                  Apply to Become a Seller →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="isSellerView" style="display:none; background:#f0fdf4; border:2px solid #10b981; border-radius:12px; padding:24px;">
+            <div style="display:flex; align-items:start; gap:16px;">
+              <div style="font-size:2.5rem;">✅</div>
+              <div style="flex:1;">
+                <h4 style="margin:0 0 8px 0; color:#0f172a;">Seller Account Active</h4>
+                <p style="margin:0 0 16px 0; color:#64748b;">
+                  You have an active seller account. Manage your shop, products, and orders from the seller dashboard.
+                </p>
+                <button type="button" class="btn" onclick="window.location.href='../seller/seller-dashboard.html'" style="margin:0;">
+                  Go to Seller Dashboard →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="window.location.href='../products.html'">Cancel</button>
+          <button type="submit" class="btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+
+    <div style="height:40px;"></div>
+  </main>
+
+  <footer class="footer" style="background:#1e293b; color:#e2e8f0; padding:16px 0; margin-top:24px;">
+    <div class="container" style="max-width:1400px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+        <!-- Left: Branding -->
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">DM</div>
+          <div>
+            <div style="font-weight:800; font-size:0.9rem; color:#f1f5f9;">DigiMart</div>
+            <div style="color:#64748b; font-size:0.75rem; line-height:1.4;">Your trusted online marketplace <br> connecting local businesses with customers.</div>
+          </div>
+        </div>
+        
+        <!-- Center: Navigation Links (Horizontal) -->
+        <div style="display:flex; gap:24px; align-items:center;">
+          <a href="../products.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Products</a>
+          <a href="../shops.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Shops</a>
+        </div>
+        
+        <!-- Right: Contact Info (Vertical) -->
+        <div style="display:flex; flex-direction:column; gap:6px; color:#94a3b8; font-size:0.8rem; text-align:right;">
+          <div>📧 support@digimart.lk</div>
+          <div>📞 +94 11 234 5678</div>
+          <div>📍 Colombo, Sri Lanka</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+        © 2025 DigiMart — All rights reserved
+      </div>
+    </div>
+  </footer>
+
+<script src="../js/products.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/user-menu.js"></script>
+<script src="../js/user-data.js"></script>
+<script>
+  // Load user account data
+  window.addEventListener('DOMContentLoaded', function() {
+    loadAccountSettings();
+    
+    // Show/hide card details based on payment method
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+      const cardDetails = document.getElementById('cardDetails');
+      if (this.value === 'Credit/Debit Card') {
+        cardDetails.style.display = 'block';
+      } else {
+        cardDetails.style.display = 'none';
+      }
+    });
+  });
+
+  function loadAccountSettings() {
+    const userData = getUserData();
+    
+    document.getElementById('fullName').value = userData.fullName || '';
+    document.getElementById('email').value = userData.email || sessionStorage.getItem('digimartUserEmail') || '';
+    document.getElementById('phone').value = userData.phone || '';
+    document.getElementById('address').value = userData.address || '';
+    document.getElementById('city').value = userData.city || '';
+    document.getElementById('province').value = userData.province || '';
+    document.getElementById('postalCode').value = userData.postalCode || '';
+    document.getElementById('paymentMethod').value = userData.paymentMethod || '';
+    document.getElementById('cardNumber').value = userData.cardNumber || '';
+    document.getElementById('cardExpiry').value = userData.cardExpiry || '';
+    document.getElementById('cardCVV').value = userData.cardCVV || '';
+    
+    // Trigger payment method change to show/hide card details
+    if (userData.paymentMethod === 'Credit/Debit Card') {
+      document.getElementById('cardDetails').style.display = 'block';
+    }
+
+    // Check seller status
+    const isSeller = userData.isSeller || false;
+    if (isSeller) {
+      document.getElementById('notSellerView').style.display = 'none';
+      document.getElementById('isSellerView').style.display = 'block';
+    } else {
+      document.getElementById('notSellerView').style.display = 'block';
+      document.getElementById('isSellerView').style.display = 'none';
+    }
+  }
+
+  function saveAccountSettings(event) {
+    event.preventDefault();
+    
+    const userData = {
+      fullName: document.getElementById('fullName').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      address: document.getElementById('address').value,
+      city: document.getElementById('city').value,
+      province: document.getElementById('province').value,
+      postalCode: document.getElementById('postalCode').value,
+      paymentMethod: document.getElementById('paymentMethod').value,
+      cardNumber: document.getElementById('cardNumber').value,
+      cardExpiry: document.getElementById('cardExpiry').value,
+      cardCVV: document.getElementById('cardCVV').value
+    };
+    
+    saveUserData(userData);
+    alert('Account settings saved successfully!');
+  }
+</script>
+</body>
+</html>
