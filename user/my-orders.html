@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,6 +11,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
+<<<<<<< HEAD
 
 <body>
   <header class="header">
@@ -16,12 +20,22 @@
       <div>
         <div style="font-weight:800">DigiMart</div>
       </div>
+=======
+<body>
+  <header class="header">
+    <a class="brand" href="../index.html">
+      <div class="logo">DM</div><div><div style="font-weight:800">DigiMart</div></div>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     </a>
     <nav class="nav">
       <a href="../products.html">Products</a>
       <a href="../shops.html">Shops</a>
       <a class="cta" href="../cart.html">Cart (<span class="cart-count">0</span>)</a>
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       <!-- User Account Menu -->
       <div class="user-menu">
         <div class="user-icon" onclick="toggleUserMenu()" id="userIcon">U</div>
@@ -53,6 +67,7 @@
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
         <!-- Left: Branding -->
         <div style="display:flex; align-items:center; gap:8px;">
+<<<<<<< HEAD
           <div
             style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">
             DM</div>
@@ -68,6 +83,21 @@
           <a href="../about.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">About</a>
         </div>
 
+=======
+          <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">DM</div>
+          <div>
+            <div style="font-weight:800; font-size:0.9rem; color:#f1f5f9;">DigiMart</div>
+            <div style="color:#64748b; font-size:0.75rem; line-height:1.4;">Your trusted online marketplace <br> connecting local businesses with customers.</div>
+          </div>
+        </div>
+        
+        <!-- Center: Navigation Links (Horizontal) -->
+        <div style="display:flex; gap:24px; align-items:center;">
+          <a href="../products.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Products</a>
+          <a href="../shops.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Shops</a>
+        </div>
+        
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
         <!-- Right: Contact Info (Vertical) -->
         <div style="display:flex; flex-direction:column; gap:6px; color:#94a3b8; font-size:0.8rem; text-align:right;">
           <div>📧 support@digimart.lk</div>
@@ -75,13 +105,18 @@
           <div>📍 Colombo, Sri Lanka</div>
         </div>
       </div>
+<<<<<<< HEAD
       <div
         style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+=======
+      <div style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
         © 2025 DigiMart — All rights reserved
       </div>
     </div>
   </footer>
 
+<<<<<<< HEAD
   <script src="../js/products.js"></script>
   <script src="../js/cart.js"></script>
   <script src="../js/user-menu.js"></script>
@@ -207,6 +242,111 @@
         const isCurrent = index === currentIndex;
 
         return `
+=======
+<script src="../js/products.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/user-menu.js"></script>
+<script src="../js/user-data.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    renderOrders();
+  });
+
+  function renderOrders() {
+    const orders = getUserOrders();
+    const container = document.getElementById('ordersContainer');
+
+    if (orders.length === 0) {
+      container.innerHTML = `
+        <div class="card" style="padding:48px; text-align:center;">
+          <div style="font-size:3rem; margin-bottom:16px;">📦</div>
+          <h3 style="margin-bottom:12px; color:var(--muted);">No Orders Yet</h3>
+          <p style="color:var(--muted); margin-bottom:24px;">Start shopping to see your orders here!</p>
+          <a href="../products.html" class="btn">Browse Products</a>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = orders.map(order => {
+      const statusColors = {
+        'Pending': '#f59e0b',
+        'Processing': '#3b82f6',
+        'Shipped': '#8b5cf6',
+        'Delivered': '#10b981',
+        'Cancelled': '#ef4444'
+      };
+
+      const statusColor = statusColors[order.status] || '#64748b';
+
+      const itemsHTML = order.items.map(item => {
+        const product = getProductById(item.productId);
+        return `
+          <div style="display:flex; gap:16px; align-items:center; padding:12px; background:#f8fafc; border-radius:8px;">
+            <img src="${product.image}" alt="${product.name}" style="width:60px; height:60px; object-fit:cover; border-radius:6px;">
+            <div style="flex:1;">
+              <div style="font-weight:600; margin-bottom:4px;">${product.name}</div>
+              <div class="small" style="color:var(--muted);">Quantity: ${item.quantity} × ${formatPriceLKR(product.price)}</div>
+            </div>
+            <div style="font-weight:700; color:var(--primary);">${formatPriceLKR(product.price * item.quantity)}</div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="card" style="padding:24px; margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="font-size:0.85rem; color:var(--muted); margin-bottom:4px;">Order #${order.id}</div>
+              <div style="font-weight:700; font-size:1.1rem;">${formatPriceLKR(order.total)}</div>
+              <div class="small" style="color:var(--muted); margin-top:4px;">${new Date(order.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+            </div>
+            <div>
+              <span style="background:${statusColor}; color:white; padding:6px 14px; border-radius:20px; font-weight:600; font-size:0.85rem;">${order.status}</span>
+            </div>
+          </div>
+
+          <!-- Order Progress -->
+          <div style="margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; position:relative; margin-bottom:8px;">
+              <div style="position:absolute; top:12px; left:0; right:0; height:2px; background:#e6eef0; z-index:0;"></div>
+              ${renderOrderProgress(order.status)}
+            </div>
+          </div>
+
+          <!-- Order Items -->
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+            ${itemsHTML}
+          </div>
+
+          <!-- Order Actions -->
+          <div style="margin-top:20px; padding-top:20px; border-top:1px solid #e6eef0; display:flex; gap:12px; justify-content:flex-end;">
+            ${order.status === 'Pending' ? '<button class="btn-secondary" onclick="cancelOrder(\'' + order.id + '\')">Cancel Order</button>' : ''}
+            <button class="btn-secondary" onclick="viewOrderDetails(\'' + order.id + '\')">View Details</button>
+            ${order.status === 'Delivered' ? '<button class="btn" onclick="reorderItems(\'' + order.id + '\')">Reorder</button>' : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderOrderProgress(status) {
+    const steps = [
+      {label: 'Pending', key: 'Pending'},
+      {label: 'Processing', key: 'Processing'},
+      {label: 'Shipped', key: 'Shipped'},
+      {label: 'Delivered', key: 'Delivered'}
+    ];
+
+    const statusOrder = ['Pending', 'Processing', 'Shipped', 'Delivered'];
+    const currentIndex = statusOrder.indexOf(status);
+
+    return steps.map((step, index) => {
+      const isActive = index <= currentIndex;
+      const isCurrent = index === currentIndex;
+      
+      return `
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
         <div style="display:flex; flex-direction:column; align-items:center; flex:1; position:relative; z-index:1;">
           <div style="width:24px; height:24px; border-radius:50%; background:${isActive ? 'var(--primary)' : '#e6eef0'}; border:3px solid white; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
             ${isActive ? '<span style="color:white; font-size:0.7rem;">✓</span>' : ''}
@@ -214,6 +354,7 @@
           <div style="font-size:0.75rem; margin-top:6px; color:${isActive ? 'var(--text)' : 'var(--muted)'}; font-weight:${isCurrent ? '700' : '500'};">${step.label}</div>
         </div>
       `;
+<<<<<<< HEAD
       }).join('');
     }
 
@@ -338,3 +479,36 @@
 </body>
 
 </html>
+=======
+    }).join('');
+  }
+
+  function cancelOrder(orderId) {
+    if (confirm('Are you sure you want to cancel this order?')) {
+      updateOrderStatus(orderId, 'Cancelled');
+      renderOrders();
+      alert('Order cancelled successfully.');
+    }
+  }
+
+  function viewOrderDetails(orderId) {
+    alert('Order details view coming soon! Order ID: ' + orderId);
+  }
+
+  function reorderItems(orderId) {
+    const orders = getUserOrders();
+    const order = orders.find(o => o.id === orderId);
+    
+    if (order) {
+      // Add items back to cart
+      order.items.forEach(item => {
+        addToCart(item.productId, item.quantity);
+      });
+      alert('Items added to cart!');
+      window.location.href = 'cart.html';
+    }
+  }
+</script>
+</body>
+</html>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d

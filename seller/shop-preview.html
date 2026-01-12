@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- seller/shop-preview.html: Seller shop preview - For sellers to preview how their shop appears to customers -->
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +21,11 @@
     /* Top Navigation Bar */
     .seller-header {
       background: white;
+<<<<<<< HEAD
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+=======
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
@@ -35,7 +42,12 @@
       gap: 12px;
       text-decoration: none;
       color: var(--text);
+<<<<<<< HEAD
       cursor: pointer;
+=======
+      cursor: default;
+      pointer-events: none;
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     .seller-brand .logo {
@@ -89,7 +101,11 @@
 
     .user-icon:hover {
       transform: scale(1.05);
+<<<<<<< HEAD
       box-shadow: 0 4px 12px rgba(14, 165, 164, 0.3);
+=======
+      box-shadow: 0 4px 12px rgba(14,165,164,0.3);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     .user-dropdown {
@@ -100,7 +116,11 @@
       background: white;
       min-width: 220px;
       border-radius: 12px;
+<<<<<<< HEAD
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+=======
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       border: 1px solid #e2e8f0;
       padding: 8px 0;
       z-index: 1000;
@@ -165,7 +185,11 @@
       border-radius: 16px;
       padding: 40px;
       margin-bottom: 32px;
+<<<<<<< HEAD
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+=======
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       border: 1px solid #e2e8f0;
     }
 
@@ -279,7 +303,11 @@
       background: white;
       border-radius: 16px;
       padding: 32px;
+<<<<<<< HEAD
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+=======
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       border: 1px solid #e2e8f0;
     }
 
@@ -315,7 +343,11 @@
     }
 
     .product-card:hover {
+<<<<<<< HEAD
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+=======
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       transform: translateY(-4px);
     }
 
@@ -477,6 +509,7 @@
     }
   </style>
 </head>
+<<<<<<< HEAD
 
 <body>
   <!-- Top Navigation -->
@@ -485,11 +518,22 @@
       <div class="logo" style="background:transparent; box-shadow:none; padding:0;">
         <img src="../images/logo.png" alt="DigiMart Logo" style="width:100%; height:100%; object-fit:contain;">
       </div>
+=======
+<body>
+  <!-- Top Navigation -->
+  <div class="seller-header">
+    <div class="seller-brand">
+      <div class="logo">DM</div>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       <div>
         <div style="font-weight:800; font-size:1.1rem;">DigiMart Seller</div>
         <div style="font-size:0.8rem; color:var(--muted);">Seller Dashboard</div>
       </div>
+<<<<<<< HEAD
     </a>
+=======
+    </div>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     <div class="seller-nav">
       <a href="seller-dashboard.html">Back to Dashboard</a>
       <div class="user-menu">
@@ -511,8 +555,12 @@
 
   <!-- Shop Preview Notice -->
   <div style="max-width: 1400px; margin: 0 auto; padding: 16px 24px;">
+<<<<<<< HEAD
     <div
       style="background: linear-gradient(135deg, rgba(14,165,164,0.1), rgba(6,182,212,0.1)); border: 1px solid rgba(14,165,164,0.3); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 12px;">
+=======
+    <div style="background: linear-gradient(135deg, rgba(14,165,164,0.1), rgba(6,182,212,0.1)); border: 1px solid rgba(14,165,164,0.3); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 12px;">
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       <span style="font-size: 1.5rem;">👁️</span>
       <div>
         <strong style="color: #0ea5a4; font-size: 0.95rem;">Shop Preview</strong>
@@ -566,6 +614,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const sellerEmail = urlParams.get('seller');
 
+<<<<<<< HEAD
     async function loadShopData() {
       // If seller email is 'undefined' string (from broken link), try to fetch from session API via the backend fallback
       // But passing 'undefined' to backend might fail if we don't handle it. 
@@ -643,6 +692,61 @@
       } catch (e) {
         console.error("Session check failed", e);
       }
+=======
+    function loadShopData() {
+      if (!sellerEmail) {
+        showError('Seller not found');
+        return;
+      }
+
+      // Load shop settings
+      const settingsKey = `shopSettings_${sellerEmail}`;
+      const settings = JSON.parse(localStorage.getItem(settingsKey) || '{}');
+
+      // Update shop header
+      if (settings.shopInfo) {
+        document.getElementById('shopName').textContent = settings.shopInfo.name || 'Unnamed Shop';
+        document.getElementById('shopCategory').textContent = settings.shopInfo.category || 'General';
+        document.getElementById('shopDescription').textContent = settings.shopInfo.description || 'No description available';
+
+        // Set logo
+        const shopLogo = document.getElementById('shopLogo');
+        if (settings.shopInfo.logo) {
+          shopLogo.style.backgroundImage = `url(${settings.shopInfo.logo})`;
+          shopLogo.style.backgroundSize = 'cover';
+          shopLogo.textContent = '';
+        } else {
+          const initial = (settings.shopInfo.name || 'S').charAt(0).toUpperCase();
+          shopLogo.textContent = initial;
+        }
+
+        // Set banner
+        const shopBanner = document.getElementById('shopBanner');
+        if (settings.shopInfo.banner) {
+          shopBanner.style.backgroundImage = `url(${settings.shopInfo.banner})`;
+          shopBanner.style.backgroundSize = 'cover';
+          shopBanner.textContent = '';
+        }
+      }
+
+      // Load products
+      const productsKey = `sellerProducts_${sellerEmail}`;
+      const products = JSON.parse(localStorage.getItem(productsKey) || '[]');
+
+      // Calculate statistics
+      const productCount = products.filter(p => p.stock > 0).length;
+      const totalSales = products.reduce((sum, p) => sum + (p.sold || 0), 0);
+      const avgRating = products.length > 0 
+        ? (products.reduce((sum, p) => sum + (parseFloat(p.rating) || 0), 0) / products.length).toFixed(1)
+        : '0.0';
+
+      document.getElementById('productCount').textContent = productCount;
+      document.getElementById('totalSales').textContent = totalSales;
+      document.getElementById('shopRating').textContent = avgRating;
+
+      // Display products
+      displayProducts(products);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     function displayProducts(products) {
@@ -666,6 +770,7 @@
 
         return `
           <div class="product-card" onclick="viewProduct('${product.id}')">
+<<<<<<< HEAD
             ${product.image
             ? `<img src="../${product.image}" alt="${product.name}" class="product-image">`
             : `<div class="product-image">📦</div>`
@@ -674,6 +779,16 @@
               <h3 class="product-name">${product.name}</h3>
               <p class="product-category">${product.category}</p>
               <div class="product-price">Rs. ${parseFloat(product.price).toFixed(2)}</div>
+=======
+            ${product.image 
+              ? `<img src="../${product.image}" alt="${product.name}" class="product-image">`
+              : `<div class="product-image">📦</div>`
+            }
+            <div class="product-info">
+              <h3 class="product-name">${product.name}</h3>
+              <p class="product-category">${product.category}</p>
+              <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
               <div class="product-footer">
                 <div class="product-rating">
                   <span class="stars">${stars || '☆'}</span>
@@ -689,7 +804,11 @@
     }
 
     function viewProduct(productId) {
+<<<<<<< HEAD
       window.location.href = `../product-detail.html?id=${productId}`;
+=======
+      window.location.href = `../product.html?id=${productId}&seller=${encodeURIComponent(sellerEmail)}`;
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     function showError(message) {
@@ -712,7 +831,11 @@
     }
 
     // Close dropdown when clicking outside
+<<<<<<< HEAD
     document.addEventListener('click', function (event) {
+=======
+    document.addEventListener('click', function(event) {
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       const userMenu = event.target.closest('.user-menu');
       const dropdown = document.getElementById('userDropdown');
       if (!userMenu && dropdown) {
@@ -736,13 +859,22 @@
     }
 
     // Initialize
+<<<<<<< HEAD
     document.addEventListener('DOMContentLoaded', function () {
+=======
+    document.addEventListener('DOMContentLoaded', function() {
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       initializeUserInfo();
       loadShopData();
     });
   </script>
+<<<<<<< HEAD
 
   <script src="../js/user-menu.js"></script>
 </body>
 
 </html>
+=======
+</body>
+</html>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -22,7 +25,11 @@
     .register-container {
       background: white;
       border-radius: 16px;
+<<<<<<< HEAD
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+=======
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       padding: 48px 40px;
       max-width: 480px;
       width: 100%;
@@ -37,7 +44,11 @@
       width: 64px;
       height: 64px;
       border-radius: 16px;
+<<<<<<< HEAD
       background: transparent;
+=======
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -45,7 +56,11 @@
       font-weight: 800;
       font-size: 1.5rem;
       margin-bottom: 16px;
+<<<<<<< HEAD
       box-shadow: none;
+=======
+      box-shadow: 0 8px 24px rgba(14,165,164,0.2);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     .register-container h2 {
@@ -87,7 +102,11 @@
     .register-container input:focus {
       outline: none;
       border-color: #0ea5a4;
+<<<<<<< HEAD
       box-shadow: 0 0 0 3px rgba(14, 165, 164, 0.1);
+=======
+      box-shadow: 0 0 0 3px rgba(14,165,164,0.1);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     .btn-register {
@@ -102,12 +121,20 @@
       cursor: pointer;
       transition: all 0.3s;
       font-size: 1.05rem;
+<<<<<<< HEAD
       box-shadow: 0 4px 12px rgba(14, 165, 164, 0.2);
+=======
+      box-shadow: 0 4px 12px rgba(14,165,164,0.2);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     .btn-register:hover {
       transform: translateY(-2px);
+<<<<<<< HEAD
       box-shadow: 0 6px 20px rgba(14, 165, 164, 0.3);
+=======
+      box-shadow: 0 6px 20px rgba(14,165,164,0.3);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     .login-link {
@@ -155,18 +182,26 @@
 <body>
   <div class="register-container">
     <div class="logo-section">
+<<<<<<< HEAD
       <a href="index.html" style="text-decoration:none; display:inline-block;">
         <div class="logo-icon">
           <img src="images/logo.png" alt="DigiMart" style="width:100%; height:100%; object-fit:contain;">
         </div>
       </a>
+=======
+      <div class="logo-icon">DM</div>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       <h2>Create Your Account</h2>
       <p>Join DigiMart and start shopping today</p>
     </div>
 
     <div class="info-box">
+<<<<<<< HEAD
       <p>💡 <strong>Want to sell on DigiMart?</strong> Register as a customer first, then apply to become a seller from
         your account settings.</p>
+=======
+      <p>💡 <strong>Want to sell on DigiMart?</strong> Register as a customer first, then apply to become a seller from your account settings.</p>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     </div>
 
     <form id="registerForm" onsubmit="handleRegister(event)">
@@ -201,9 +236,15 @@
   </div>
 
   <script>
+<<<<<<< HEAD
     async function handleRegister(event) {
       event.preventDefault();
 
+=======
+    function handleRegister(event) {
+      event.preventDefault();
+      
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       const fullName = document.getElementById("fullName").value.trim();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
@@ -213,16 +254,35 @@
       // Reset error
       errorMsg.textContent = "";
 
+<<<<<<< HEAD
       // Client-side Validation
+=======
+      // Validation
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       if (!fullName || !email || !password || !confirmPassword) {
         errorMsg.textContent = "Please fill in all fields.";
         return;
       }
+<<<<<<< HEAD
+=======
+
+      if (!email.includes("@")) {
+        errorMsg.textContent = "Please enter a valid email address.";
+        return;
+      }
+
+      if (password.length < 4) {
+        errorMsg.textContent = "Password must be at least 4 characters.";
+        return;
+      }
+
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       if (password !== confirmPassword) {
         errorMsg.textContent = "Passwords do not match.";
         return;
       }
 
+<<<<<<< HEAD
       // API Call
       try {
         const res = await fetch('api/auth/register.php', {
@@ -247,3 +307,30 @@
 </body>
 
 </html>
+=======
+      // For demo: Store in localStorage (will be replaced with PHP/MySQL backend)
+      const userData = {
+        fullName: fullName,
+        email: email,
+        password: password,
+        isSeller: false,
+        createdAt: new Date().toISOString()
+      };
+
+      // Check if user already exists
+      const existingUser = localStorage.getItem(`digimartUser_${email}`);
+      if (existingUser) {
+        errorMsg.textContent = "An account with this email already exists.";
+        return;
+      }
+
+      // Save user data
+      localStorage.setItem(`digimartUser_${email}`, JSON.stringify(userData));
+      
+      alert("Registration successful! 🎉\n\nYou can now log in with your credentials.");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d

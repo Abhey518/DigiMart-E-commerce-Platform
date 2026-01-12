@@ -1,7 +1,10 @@
 <!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -30,7 +33,11 @@
     .login-card {
       background: rgba(255, 255, 255, 0.95);
       border-radius: 16px;
+<<<<<<< HEAD
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+=======
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       padding: 40px 30px;
       max-width: 400px;
       width: 100%;
@@ -57,7 +64,11 @@
     .login-card input:focus {
       outline: none;
       border-color: #0077ff;
+<<<<<<< HEAD
       box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.1);
+=======
+      box-shadow: 0 0 0 3px rgba(0,119,255,0.1);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     }
 
     .login-card button {
@@ -104,9 +115,13 @@
   <!-- Header -->
   <header class="header">
     <a class="brand" href="index.html">
+<<<<<<< HEAD
       <div class="logo" style="background:transparent; box-shadow:none; padding:0;">
         <img src="images/logo.png" alt="DigiMart Logo" style="width:100%; height:100%; object-fit:contain;">
       </div>
+=======
+      <div class="logo">DM</div>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       <div>
         <div style="font-weight:800">DigiMart</div>
         <div style="font-size:0.85rem; color:var(--muted)">Online marketplace supporting local businesses</div>
@@ -140,16 +155,25 @@
 
   <!-- Scripts -->
   <script>
+<<<<<<< HEAD
     async function loginUser() {
+=======
+    function loginUser() {
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
       const error = document.getElementById("loginError");
 
+<<<<<<< HEAD
+=======
+      // Simple validation - just check if fields are filled
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       if (!email || !password) {
         error.textContent = "Please enter both email and password.";
         return;
       }
 
+<<<<<<< HEAD
       try {
         const res = await fetch('api/auth/login.php', {
           method: 'POST',
@@ -168,9 +192,24 @@
         }
       } catch (e) {
         error.textContent = "Network error. Please try again.";
+=======
+      // Since there's no backend, allow any valid email/password to login
+      if (email.includes("@") && password.length >= 4) {
+        alert("Login successful! 🎉");
+        // Store simple user info for the session
+        sessionStorage.setItem("digimartLoggedIn", "true");
+        sessionStorage.setItem("digimartUserEmail", email);
+        window.location.href = "products.html";
+      } else {
+        error.textContent = "Please enter a valid email and password (min 4 characters).";
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       }
     }
   </script>
 </body>
+<<<<<<< HEAD
 
 </html>
+=======
+</html>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d

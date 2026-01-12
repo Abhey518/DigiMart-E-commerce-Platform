@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en">
 <!-- shop.html: Individual shop view - For customers to view a specific seller's shop and products -->
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,6 +12,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
+<<<<<<< HEAD
 
 <body>
   <header class="header">
@@ -17,11 +21,21 @@
       <div>
         <div style="font-weight:800">DigiMart</div>
       </div>
+=======
+<body>
+  <header class="header">
+    <a class="brand" href="index.html">
+      <div class="logo">DM</div><div><div style="font-weight:800">DigiMart</div></div>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     </a>
     <nav class="nav">
       <a href="products.html">Products</a><a href="shops.html">Shops</a>
       <a class="cta" href="cart.html">Cart (<span class="cart-count">0</span>)</a>
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       <!-- User Account Menu -->
       <div class="user-menu">
         <div class="user-icon" onclick="toggleUserMenu()" id="userIcon">U</div>
@@ -41,7 +55,11 @@
 
   <main class="container">
     <div id="shop-container"></div>
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
     <div style="margin-top:40px;">
       <h3>Products from this Shop</h3>
       <div id="shop-products"></div>
@@ -53,6 +71,7 @@
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
         <!-- Left: Branding -->
         <div style="display:flex; align-items:center; gap:8px;">
+<<<<<<< HEAD
           <div
             style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">
             DM</div>
@@ -68,6 +87,21 @@
           <a href="about.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">About</a>
         </div>
 
+=======
+          <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">DM</div>
+          <div>
+            <div style="font-weight:800; font-size:0.9rem; color:#f1f5f9;">DigiMart</div>
+            <div style="color:#64748b; font-size:0.75rem; line-height:1.4;">Your trusted online marketplace <br> connecting local businesses with customers.</div>
+          </div>
+        </div>
+        
+        <!-- Center: Navigation Links (Horizontal) -->
+        <div style="display:flex; gap:24px; align-items:center;">
+          <a href="products.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Products</a>
+          <a href="shops.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">Shops</a>
+        </div>
+        
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
         <!-- Right: Contact Info (Vertical) -->
         <div style="display:flex; flex-direction:column; gap:6px; color:#94a3b8; font-size:0.8rem; text-align:right;">
           <div>📧 support@digimart.lk</div>
@@ -75,13 +109,18 @@
           <div>📍 Colombo, Sri Lanka</div>
         </div>
       </div>
+<<<<<<< HEAD
       <div
         style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+=======
+      <div style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
         © 2025 DigiMart — All rights reserved
       </div>
     </div>
   </footer>
 
+<<<<<<< HEAD
   <script src="js/products.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
@@ -119,6 +158,33 @@
           : '';
 
         document.getElementById("shop-container").innerHTML = `
+=======
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script src="js/user-menu.js"></script>
+<script src="js/user-data.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const shopId = params.get("id");
+  const shop = getShopById(shopId);
+  
+  if(!shop){
+    document.getElementById("shop-container").innerHTML = '<div class="card">Shop not found. <a href="products.html">Back to products</a></div>';
+  } else {
+    // Render shop details
+    const shopProducts = getProductsByShop(shopId);
+    const servicesHTML = shop.services.length > 0 
+      ? `<div style="margin-top:16px;">
+          <strong>Services:</strong>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            ${shop.services.map(s => `<span class="card" style="padding:6px 12px; font-size:0.85rem; background:#e0f2f1;">${s}</span>`).join('')}
+          </div>
+        </div>`
+      : '';
+    
+    document.getElementById("shop-container").innerHTML = `
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
       <div class="card" style="padding:32px;">
         <div style="display:flex; gap:24px; flex-wrap:wrap;">
           <div style="flex:1; min-width:300px;">
@@ -128,8 +194,13 @@
                 ★ ${shop.rating} <span class="small" style="color:var(--muted);">(${shop.reviewCount} reviews)</span>
               </div>
             </div>
+<<<<<<< HEAD
             <p style="line-height:1.7; color:var(--muted); margin-bottom:16px;">${shop.description || ''}</p>
 
+=======
+            <p style="line-height:1.7; color:var(--muted); margin-bottom:16px;">${shop.description}</p>
+            
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:16px; margin-top:24px;">
               <div class="card" style="padding:16px; text-align:center; background:#f8fafc;">
                 <div style="font-size:2rem; font-weight:800; color:var(--primary);">${shop.productCount}</div>
@@ -144,21 +215,36 @@
                 <div class="small" style="color:var(--muted);">Reviews</div>
               </div>
             </div>
+<<<<<<< HEAD
 
             ${servicesHTML}
           </div>
 
+=======
+            
+            ${servicesHTML}
+          </div>
+          
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
           <div style="min-width:280px;">
             <div class="card" style="padding:20px; background:#f8fafc;">
               <h3 style="margin-bottom:16px;">Contact Information</h3>
               <div style="display:flex; flex-direction:column; gap:12px;">
                 <div>
                   <div class="small" style="color:var(--muted); margin-bottom:4px;">Phone</div>
+<<<<<<< HEAD
                   <strong style="font-size:1rem;">${shop.contact_phone || 'N/A'}</strong>
                 </div>
                 <div>
                   <div class="small" style="color:var(--muted); margin-bottom:4px;">Email</div>
                   <strong style="font-size:1rem;">${shop.contact_email || 'N/A'}</strong>
+=======
+                  <strong style="font-size:1rem;">${shop.contact}</strong>
+                </div>
+                <div>
+                  <div class="small" style="color:var(--muted); margin-bottom:4px;">Email</div>
+                  <strong style="font-size:1rem;">${shop.email}</strong>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
                 </div>
                 <button class="btn" style="margin-top:12px;" onclick="openContactModal()">Contact Shop</button>
               </div>
@@ -166,6 +252,7 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       `;
 
         // 3. Set global shop var for modal
@@ -214,10 +301,45 @@
   alert(`Message sent to ${window.currentShop.name}!\n\nYour message has been sent successfully. The seller will respond
   to ${email} shortly.`);
   closeContactModal();
+=======
+    `;
+    
+    // Render shop products
+    if(shopProducts.length > 0){
+      renderProductsGrid("#shop-products", shopProducts);
+    } else {
+      document.getElementById("shop-products").innerHTML = '<div class="card small">No products available from this shop yet.</div>';
+    }
+  }
+
+  // Contact Shop Modal Functions
+  function openContactModal() {
+    const modal = document.getElementById('contactModal');
+    const shopNameEl = document.getElementById('contactShopName');
+    shopNameEl.textContent = shop.name;
+    modal.style.display = 'flex';
+  }
+
+  function closeContactModal() {
+    document.getElementById('contactModal').style.display = 'none';
+    document.getElementById('contactForm').reset();
+  }
+
+  function submitContactForm(event) {
+    event.preventDefault();
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    
+    // Simulate sending message
+    alert(`Message sent to ${shop.name}!\n\nYour message has been sent successfully. The seller will respond to ${email} shortly.`);
+    closeContactModal();
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
   }
 
   // Close modal when clicking outside
   window.onclick = function(event) {
+<<<<<<< HEAD
   const modal = document.getElementById('contactModal');
   if (event.target === modal) {
   closeContactModal();
@@ -256,3 +378,42 @@
 </body>
 
 </html>
+=======
+    const modal = document.getElementById('contactModal');
+    if (event.target === modal) {
+      closeContactModal();
+    }
+  }
+</script>
+
+<!-- Contact Modal -->
+<div id="contactModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Contact <span id="contactShopName"></span></h2>
+      <span class="close-btn" onclick="closeContactModal()">&times;</span>
+    </div>
+    <form id="contactForm" onsubmit="submitContactForm(event)">
+      <div class="form-group">
+        <label for="contactName">Your Name</label>
+        <input type="text" id="contactName" required placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label for="contactEmail">Your Email</label>
+        <input type="email" id="contactEmail" required placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" required placeholder="Type your message here..." rows="5"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" onclick="closeContactModal()">Cancel</button>
+        <button type="submit" class="btn">Send Message</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d

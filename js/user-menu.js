@@ -3,6 +3,7 @@ function toggleUserMenu() {
   document.getElementById('userDropdown').classList.toggle('active');
 }
 
+<<<<<<< HEAD
 async function logoutUser() {
   const path = window.location.pathname;
   let apiBase = '';
@@ -69,6 +70,30 @@ async function initUserMenu() {
     console.log("Session check failed", e);
     // Clear session storage on error
     sessionStorage.removeItem('digimartLoggedIn');
+=======
+function logoutUser() {
+  sessionStorage.removeItem('digimartLoggedIn');
+  sessionStorage.removeItem('digimartUserEmail');
+  alert('Logged out successfully!');
+  window.location.href = 'index.html';
+}
+
+// Load user info on page load
+function initUserMenu() {
+  const userEmail = sessionStorage.getItem('digimartUserEmail');
+  const userIcon = document.getElementById('userIcon');
+  const displayEmail = document.getElementById('displayEmail');
+  
+  if (userEmail && userIcon && displayEmail) {
+    displayEmail.textContent = userEmail;
+    // Set user icon to first letter of email
+    userIcon.textContent = userEmail.charAt(0).toUpperCase();
+    
+    // Check if user is a seller and add seller dashboard link
+    if (typeof isUserSeller !== 'undefined' && isUserSeller()) {
+      addSellerDashboardLink();
+    }
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
   }
 }
 
@@ -76,6 +101,7 @@ async function initUserMenu() {
 function addSellerDashboardLink() {
   const userDropdown = document.getElementById('userDropdown');
   if (!userDropdown) return;
+<<<<<<< HEAD
 
   // Check if link already exists
   if (document.getElementById('sellerDashboardLink')) return;
@@ -92,15 +118,40 @@ function addSellerDashboardLink() {
   const isInSubfolder = window.location.pathname.includes('/user/');
   sellerLink.href = isInSubfolder ? '../seller/seller-dashboard.html' : 'seller/seller-dashboard.html';
 
+=======
+  
+  // Check if link already exists
+  if (document.getElementById('sellerDashboardLink')) return;
+  
+  // Find the user info div
+  const userInfo = userDropdown.querySelector('.user-info');
+  if (!userInfo) return;
+  
+  // Create seller dashboard link
+  const sellerLink = document.createElement('a');
+  sellerLink.id = 'sellerDashboardLink';
+  
+  // Detect if we're in a subfolder (user/) and adjust path accordingly
+  const isInSubfolder = window.location.pathname.includes('/user/');
+  sellerLink.href = isInSubfolder ? '../seller/seller-dashboard.html' : 'seller/seller-dashboard.html';
+  
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
   sellerLink.innerHTML = '🏪 Seller Dashboard';
   sellerLink.style.borderTop = '1px solid #e6eef0';
   sellerLink.style.background = 'linear-gradient(135deg, rgba(14,165,164,0.05), rgba(6,182,212,0.05))';
   sellerLink.style.fontWeight = '600';
   sellerLink.style.color = '#0ea5a4';
+<<<<<<< HEAD
 
   // Insert after user info
   userInfo.insertAdjacentElement('afterend', sellerLink);
 
+=======
+  
+  // Insert after user info
+  userInfo.insertAdjacentElement('afterend', sellerLink);
+  
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
   // Update user role display
   const userRole = userInfo.querySelector('.user-role');
   if (userRole) {
@@ -110,7 +161,11 @@ function addSellerDashboardLink() {
 }
 
 // Close dropdown when clicking outside
+<<<<<<< HEAD
 window.addEventListener('click', function (e) {
+=======
+window.addEventListener('click', function(e) {
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
   if (!e.target.matches('.user-icon') && !e.target.closest('.user-dropdown')) {
     const dropdown = document.getElementById('userDropdown');
     if (dropdown && dropdown.classList.contains('active')) {
@@ -120,6 +175,7 @@ window.addEventListener('click', function (e) {
 });
 
 // Initialize on page load
+<<<<<<< HEAD
 // Initialize on page load
 window.addEventListener('DOMContentLoaded', initUserMenu);
 
@@ -141,3 +197,6 @@ function handleLogoClick() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
+=======
+window.addEventListener('DOMContentLoaded', initUserMenu);
+>>>>>>> 6c6360353629ad3f13cdce8ac66d268bf0e3e88d
