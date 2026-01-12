@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Seller Application — DigiMart</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="brand" href="../index.html">
+      <div class="logo">DM</div>
+      <div>
+        <div style="font-weight:800">DigiMart</div>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="../products.html">Products</a>
+      <a href="../shops.html">Shops</a>
+      <a class="cta" href="../cart.html">Cart (<span class="cart-count">0</span>)</a>
+
+      <!-- User Account Menu -->
+      <div class="user-menu">
+        <div class="user-icon" onclick="toggleUserMenu()" id="userIcon">U</div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-info">
+            <div class="user-email" id="displayEmail">user@example.com</div>
+            <div class="user-role">Customer</div>
+          </div>
+          <a href="../user/account-settings.html">Account Settings</a>
+          <a href="../user/my-orders.html">My Orders</a>
+          <a href="../user/wishlist.html">Wishlist</a>
+          <a href="#" class="logout" onclick="logoutUser(); return false;">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="root-header-space"></div>
+
+  <main class="container">
+    <div style="height:60px;"></div>
+    <h2>Apply to Become a Seller</h2>
+    <p class="small" style="color:var(--muted); margin-bottom:32px;">Join DigiMart as a seller and start reaching
+      thousands of customers</p>
+
+    <div class="card" style="padding:32px; max-width:900px;">
+      <div
+        style="background:#f0fdfa; border-left:4px solid #0ea5a4; padding:20px; border-radius:8px; margin-bottom:32px;">
+        <h4 style="margin:0 0 8px 0; color:#0f172a;">📋 Application Requirements</h4>
+        <p style="margin:0; color:#64748b; line-height:1.6;">
+          Please provide accurate information. Your application will be reviewed by our team, and you'll receive a
+          response within 2-3 business days.
+        </p>
+      </div>
+
+      <form id="sellerApplicationForm" onsubmit="submitSellerApplication(event)">
+
+        <!-- Shop Information -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Shop Information</h3>
+
+          <div class="form-group">
+            <label for="shopName">Shop Name *</label>
+            <input type="text" id="shopName" placeholder="Enter your shop name" required>
+            <small style="color:var(--muted);">This will be displayed to customers</small>
+          </div>
+
+          <div class="form-group">
+            <label for="shopDescription">Shop Description *</label>
+            <textarea id="shopDescription" placeholder="Describe your shop and what you sell..." rows="4"
+              required></textarea>
+            <small style="color:var(--muted);">Tell customers about your business (minimum 50 characters)</small>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px;">
+            <div class="form-group">
+              <label for="shopCategory">Business Category *</label>
+              <select id="shopCategory" required>
+                <option value="">Select Category</option>
+                <option value="Electronics">Electronics & Gadgets</option>
+                <option value="Fashion">Fashion & Apparel</option>
+                <option value="Home">Home & Living</option>
+                <option value="Books">Books & Stationery</option>
+                <option value="Sports">Sports & Outdoors</option>
+                <option value="Beauty">Beauty & Health</option>
+                <option value="Food">Food & Beverages</option>
+                <option value="Toys">Toys & Games</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="expectedProducts">Expected Number of Products *</label>
+              <select id="expectedProducts" required>
+                <option value="">Select Range</option>
+                <option value="1-10">1-10 products</option>
+                <option value="11-50">11-50 products</option>
+                <option value="51-100">51-100 products</option>
+                <option value="100+">More than 100 products</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Details -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Business Details</h3>
+
+          <div class="form-group">
+            <label for="businessType">Business Type *</label>
+            <select id="businessType" required>
+              <option value="">Select Business Type</option>
+              <option value="Individual">Individual/Sole Proprietor</option>
+              <option value="Partnership">Partnership</option>
+              <option value="Private Limited">Private Limited Company</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="businessRegNumber">Business Registration Number (if applicable)</label>
+            <input type="text" id="businessRegNumber" placeholder="Optional - Your business registration number">
+          </div>
+
+          <div class="form-group">
+            <label for="taxId">Tax ID / VAT Number (if applicable)</label>
+            <input type="text" id="taxId" placeholder="Optional - Your tax identification number">
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Contact Information</h3>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px;">
+            <div class="form-group">
+              <label for="contactPhone">Contact Phone Number *</label>
+              <input type="tel" id="contactPhone" placeholder="+94 XX XXX XXXX" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail">Contact Email *</label>
+              <input type="email" id="contactEmail" placeholder="shop@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="businessAddress">Business Address *</label>
+            <input type="text" id="businessAddress" placeholder="Street address" required>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
+            <div class="form-group">
+              <label for="businessCity">City *</label>
+              <input type="text" id="businessCity" placeholder="City" required>
+            </div>
+
+            <div class="form-group">
+              <label for="businessProvince">Province *</label>
+              <select id="businessProvince" required>
+                <option value="">Select Province</option>
+                <option value="Western">Western</option>
+                <option value="Central">Central</option>
+                <option value="Southern">Southern</option>
+                <option value="Northern">Northern</option>
+                <option value="Eastern">Eastern</option>
+                <option value="North Western">North Western</option>
+                <option value="North Central">North Central</option>
+                <option value="Uva">Uva</option>
+                <option value="Sabaragamuwa">Sabaragamuwa</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="businessPostal">Postal Code *</label>
+              <input type="text" id="businessPostal" placeholder="10000" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank Account Details -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e6eef0;">Bank Account Details
+          </h3>
+          <p class="small" style="color:var(--muted); margin-bottom:16px;">For receiving payments from sales</p>
+
+          <div class="form-group">
+            <label for="bankName">Bank Name *</label>
+            <input type="text" id="bankName" placeholder="Enter bank name" required>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px;">
+            <div class="form-group">
+              <label for="accountNumber">Account Number *</label>
+              <input type="text" id="accountNumber" placeholder="Enter account number" required>
+            </div>
+
+            <div class="form-group">
+              <label for="accountName">Account Holder Name *</label>
+              <input type="text" id="accountName" placeholder="Name on account" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="branchCode">Branch Code / SWIFT Code</label>
+            <input type="text" id="branchCode" placeholder="Optional - Branch or SWIFT code">
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div style="margin-bottom:32px;">
+          <label style="display:flex; align-items:start; gap:12px; cursor:pointer;">
+            <input type="checkbox" id="agreeTerms" required style="width:auto; margin-top:4px;">
+            <span style="color:var(--text); line-height:1.6;">
+              I agree to DigiMart's <a href="#" style="color:var(--primary);">Seller Terms and Conditions</a> and
+              <a href="#" style="color:var(--primary);">Privacy Policy</a>. I confirm that all information provided is
+              accurate and truthful.
+            </span>
+          </label>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary"
+            onclick="window.location.href='../user/account-settings.html'">Cancel</button>
+          <button type="submit" class="btn">Submit Application</button>
+        </div>
+      </form>
+    </div>
+
+    <div style="height:40px;"></div>
+  </main>
+
+  <footer class="footer" style="margin-top:40px; background:#1e293b; color:#e2e8f0; padding:20px 0;">
+    <div class="container">
+      <div
+        style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:16px;">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <div
+              style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.9rem;">
+              DM</div>
+            <div style="font-weight:800; font-size:1rem;">DigiMart</div>
+          </div>
+          <p style="color:#94a3b8; line-height:1.5; font-size:0.85rem;">Your trusted online marketplace connecting local
+            businesses with customers.</p>
+        </div>
+        <div>
+          <h4 style="margin-bottom:12px; font-size:0.9rem; color:#f1f5f9;">Quick Links</h4>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <a href="../about.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">About</a>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin-bottom:12px; font-size:0.9rem; color:#f1f5f9;">Contact Us</h4>
+          <div style="display:flex; flex-direction:column; gap:8px; color:#94a3b8; font-size:0.85rem;">
+            <div>📧 support@digimart.lk</div>
+            <div>📞 +94 11 234 5678</div>
+            <div>📍 Colombo, Sri Lanka</div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid #334155; padding-top:12px; text-align:center; color:#64748b; font-size:0.8rem;">
+        © 2025 <strong style="color:#94a3b8;">DigiMart</strong> — All rights reserved
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/products.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/user-menu.js"></script>
+  <script src="../js/user-data.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', async function () {
+      try {
+        const response = await fetch('../api/auth/session.php');
+        const data = await response.json();
+
+        if (!data.loggedIn) {
+          alert('Please login to apply for a seller account.');
+          window.location.href = '../login.html';
+          return; // Stop execution
+        }
+
+        if (data.user.isSeller) {
+          alert('You are already a seller! Redirecting to your dashboard.');
+          window.location.href = 'seller-dashboard.html';
+          return;
+        }
+
+        // Initialize user info for header if needed
+        const userIcon = document.getElementById('userIcon');
+        const displayEmail = document.getElementById('displayEmail');
+
+        if (displayEmail) displayEmail.textContent = data.user.email;
+        if (userIcon && data.user.name) userIcon.textContent = data.user.name.charAt(0).toUpperCase();
+
+      } catch (error) {
+        console.error("Auth check failed", error);
+        window.location.href = '../login.html';
+      }
+    });
+
+    async function submitSellerApplication(event) {
+      event.preventDefault();
+
+      // Collect form data
+      const formData = {
+        shopName: document.getElementById('shopName').value,
+        shopDescription: document.getElementById('shopDescription').value,
+        shopCategory: document.getElementById('shopCategory').value,
+        expectedProducts: document.getElementById('expectedProducts').value,
+        businessType: document.getElementById('businessType').value,
+        businessRegNumber: document.getElementById('businessRegNumber').value,
+        taxId: document.getElementById('taxId').value,
+        contactPhone: document.getElementById('contactPhone').value,
+        contactEmail: document.getElementById('contactEmail').value,
+        businessAddress: document.getElementById('businessAddress').value,
+        businessCity: document.getElementById('businessCity').value,
+        businessProvince: document.getElementById('businessProvince').value,
+        businessPostal: document.getElementById('businessPostal').value,
+        bankName: document.getElementById('bankName').value,
+        accountNumber: document.getElementById('accountNumber').value,
+        accountName: document.getElementById('accountName').value,
+        branchCode: document.getElementById('branchCode').value
+      };
+
+      // Validate description length
+      if (formData.shopDescription.length < 50) {
+        alert('Shop description must be at least 50 characters long.');
+        return;
+      }
+
+      try {
+        const response = await fetch('../api/seller/create_shop.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          alert('🎉 Congratulations!\n\nYour seller application has been approved!\n\nYou can now access your seller dashboard and start listing products.');
+          window.location.href = 'seller-dashboard.html';
+        } else {
+          alert(result.error || 'Failed to create shop. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      }
+    }
+  </script>
+</body>
+
+</html>

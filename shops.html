@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<!-- shops.html: Browse all shops - Lists all sellers and their shops for customers to explore -->
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All Shops — DigiMart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="brand" href="javascript:void(0)" onclick="handleLogoClick()">
+      <div class="logo" style="background:transparent; box-shadow:none; padding:0;">
+        <img src="images/logo.png" alt="DigiMart Logo" style="width:100%; height:100%; object-fit:contain;">
+      </div>
+      <div>
+        <div style="font-weight:800">DigiMart</div>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="products.html">Products</a>
+      <a href="shops.html">Shops</a>
+      <a class="cta" href="cart.html">Cart (<span class="cart-count">0</span>)</a>
+
+      <!-- User Account Menu -->
+      <div class="user-menu">
+        <div class="user-icon" onclick="toggleUserMenu()" id="userIcon">U</div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-info">
+            <div class="user-email" id="displayEmail">user@example.com</div>
+            <div class="user-role">Customer</div>
+          </div>
+          <a href="user/account-settings.html">Account Settings</a>
+          <a href="user/my-orders.html">My Orders</a>
+          <a href="user/wishlist.html">Wishlist</a>
+          <a href="#" class="logout" onclick="logoutUser(); return false;">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Browse Shops</h2>
+    <p style="color:var(--muted); margin-bottom:24px;">Discover trusted local sellers and their unique product
+      collections</p>
+
+    <div id="shops-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:24px;">
+    </div>
+  </main>
+
+  <footer class="footer" style="background:#1e293b; color:#e2e8f0; padding:16px 0; margin-top:24px;">
+    <div class="container" style="max-width:1400px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+        <!-- Left: Branding -->
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div
+            style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">
+            DM</div>
+          <div>
+            <div style="font-weight:800; font-size:0.9rem; color:#f1f5f9;">DigiMart</div>
+            <div style="color:#64748b; font-size:0.75rem; line-height:1.4;">Your trusted online marketplace <br>
+              connecting local businesses with customers.</div>
+          </div>
+        </div>
+
+        <!-- Center: Navigation Links (Horizontal) -->
+        <div style="display:flex; gap:24px; align-items:center;">
+          <a href="about.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">About</a>
+        </div>
+
+        <!-- Right: Contact Info (Vertical) -->
+        <div style="display:flex; flex-direction:column; gap:6px; color:#94a3b8; font-size:0.8rem; text-align:right;">
+          <div>📧 support@digimart.lk</div>
+          <div>📞 +94 11 234 5678</div>
+          <div>📍 Colombo, Sri Lanka</div>
+        </div>
+      </div>
+      <div
+        style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+        © 2025 DigiMart — All rights reserved
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/user-menu.js"></script>
+  <script src="js/user-data.js"></script>
+  <script>
+    // Render all shops
+    async function renderShopsGrid() {
+      const container = document.getElementById('shops-grid');
+      if (!container) return;
+
+      container.innerHTML = '<div style="text-align:center; padding:40px;">Loading shops...</div>';
+
+      try {
+        const res = await fetch('api/shops/list.php');
+        const shops = await res.json();
+
+        if (shops.length === 0) {
+          container.innerHTML = '<div style="text-align:center; padding:40px;">No shops found.</div>';
+          return;
+        }
+
+        container.innerHTML = '';
+
+        shops.forEach(shop => {
+          const shopCard = document.createElement('div');
+          shopCard.className = 'card';
+          shopCard.style.cursor = 'pointer';
+          shopCard.style.transition = 'transform 0.2s, box-shadow 0.2s';
+          shopCard.onmouseenter = function () {
+            this.style.transform = 'translateY(-4px)';
+            this.style.boxShadow = '0 8px 24px rgba(15,23,42,0.12)';
+          };
+          shopCard.onmouseleave = function () {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '';
+          };
+
+          const services = shop.services || [];
+          const servicesHTML = services.length > 0
+            ? `<div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:12px;">
+        ${services.slice(0, 3).map(s => `<span style="padding:4px 10px; font-size:0.75rem; background:#e0f2f1; border-radius:6px; color:var(--primary);">${s}</span>`).join('')}
+      </div>`
+            : '';
+
+          shopCard.innerHTML = `
+      <div style="padding:20px;">
+        <h3 style="margin-bottom:8px; color:var(--primary);">${shop.name}</h3>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+          <div class="rating" style="color:#f59e0b;">
+            ★ ${shop.rating}
+          </div>
+          <span class="small" style="color:var(--muted);">(${shop.reviewCount} reviews)</span>
+        </div>
+
+        <p class="small" style="color:var(--muted); line-height:1.6; margin-bottom:12px;">
+          ${shop.description ? (shop.description.length > 120 ? shop.description.substring(0, 120) + '...' : shop.description) : ''}
+        </p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding-top:16px; border-top:1px solid #e6eef0;">
+          <div style="text-align:center;">
+            <div style="font-weight:700; font-size:1.3rem; color:var(--primary);">${shop.productCount}</div>
+            <div class="small" style="color:var(--muted);">Products</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-weight:700; font-size:1.3rem; color:var(--primary);">${shop.rating}</div>
+            <div class="small" style="color:var(--muted);">Rating</div>
+          </div>
+        </div>
+
+        ${servicesHTML}
+
+        <button class="btn" style="width:100%; margin-top:16px;" onclick="window.location.href='shop.html?id=${shop.id}'">
+          Visit Shop →
+        </button>
+      </div>
+        `;
+
+          container.appendChild(shopCard);
+        });
+      } catch (e) {
+        container.innerHTML = '<div style="text-align:center; padding:40px; color:red">Failed to load shops.</div>';
+        console.error(e);
+      }
+    }
+
+    renderShopsGrid();
+  </script>
+</body>
+
+</html>
