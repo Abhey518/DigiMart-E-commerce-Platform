@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Product — DigiMart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header class="header">
+    <a class="brand" href="javascript:void(0)" onclick="handleLogoClick()">
+      <div class="logo" style="background:transparent; box-shadow:none; padding:0;">
+        <img src="images/logo.png" alt="DigiMart Logo" style="width:100%; height:100%; object-fit:contain;">
+      </div>
+      <div>
+        <div style="font-weight:800">DigiMart</div>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="products.html">Products</a><a href="shops.html">Shops</a>
+      <a class="cta" href="cart.html">Cart (<span class="cart-count">0</span>)</a>
+
+      <!-- User Account Menu -->
+      <div class="user-menu">
+        <div class="user-icon" onclick="toggleUserMenu()" id="userIcon">U</div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-info">
+            <div class="user-email" id="displayEmail">user@example.com</div>
+            <div class="user-role">Customer</div>
+          </div>
+          <a href="user/account-settings.html">Account Settings</a>
+          <a href="user/my-orders.html">My Orders</a>
+          <a href="user/wishlist.html">Wishlist</a>
+          <a href="#" class="logout" onclick="logoutUser(); return false;">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="root-header-space"></div>
+
+  <main class="container">
+    <div id="product-container"></div>
+  </main>
+
+  <footer class="footer" style="background:#1e293b; color:#e2e8f0; padding:16px 0; margin-top:24px;">
+    <div class="container" style="max-width:1400px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+        <!-- Left: Branding -->
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div
+            style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">
+            DM</div>
+          <div>
+            <div style="font-weight:800; font-size:0.9rem; color:#f1f5f9;">DigiMart</div>
+            <div style="color:#64748b; font-size:0.75rem; line-height:1.4;">Your trusted online marketplace <br>
+              connecting local businesses with customers.</div>
+          </div>
+        </div>
+
+        <!-- Center: Navigation Links (Horizontal) -->
+        <div style="display:flex; gap:24px; align-items:center;">
+          <a href="about.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">About</a>
+        </div>
+
+        <!-- Right: Contact Info (Vertical) -->
+        <div style="display:flex; flex-direction:column; gap:6px; color:#94a3b8; font-size:0.8rem; text-align:right;">
+          <div>📧 support@digimart.lk</div>
+          <div>📞 +94 11 234 5678</div>
+          <div>📍 Colombo, Sri Lanka</div>
+        </div>
+      </div>
+      <div
+        style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+        © 2025 DigiMart — All rights reserved
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/user-menu.js"></script>
+  <script src="js/user-data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (!id) {
+      document.getElementById("product-container").innerHTML = '<div class="card">No product specified. <a href="products.html">Back to products</a></div>';
+    } else {
+      loadProductDetail(id, "#product-container");
+    }
+  </script>
+</body>
+
+</html>
