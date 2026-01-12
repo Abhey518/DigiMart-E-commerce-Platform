@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Wishlist — DigiMart</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="brand" href="../index.html">
+      <div class="logo">DM</div>
+      <div>
+        <div style="font-weight:800">DigiMart</div>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="../products.html">Products</a>
+      <a href="../shops.html">Shops</a>
+      <a class="cta" href="../cart.html">Cart (<span class="cart-count">0</span>)</a>
+
+      <!-- User Account Menu -->
+      <div class="user-menu">
+        <div class="user-icon" onclick="toggleUserMenu()" id="userIcon">U</div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-info">
+            <div class="user-email" id="displayEmail">user@example.com</div>
+            <div class="user-role">Customer</div>
+          </div>
+          <a href="account-settings.html">Account Settings</a>
+          <a href="my-orders.html">My Orders</a>
+          <a href="wishlist.html">Wishlist</a>
+          <a href="#" class="logout" onclick="logoutUser(); return false;">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div
+      style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h2 style="margin-bottom:4px;">My Wishlist</h2>
+        <p class="small" style="color:var(--muted);">Save your favorite products for later</p>
+      </div>
+      <div>
+        <span class="small" style="color:var(--muted);">
+          <span id="wishlistCount">0</span> items saved
+        </span>
+      </div>
+    </div>
+
+    <div id="wishlistContainer"></div>
+
+    <div style="height:40px;"></div>
+  </main>
+
+  <footer class="footer" style="background:#1e293b; color:#e2e8f0; padding:16px 0; margin-top:24px;">
+    <div class="container" style="max-width:1400px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+        <!-- Left: Branding -->
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div
+            style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#0ea5a4,#06b6d4); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">
+            DM</div>
+          <div>
+            <div style="font-weight:800; font-size:0.9rem; color:#f1f5f9;">DigiMart</div>
+            <div style="color:#64748b; font-size:0.75rem; line-height:1.4;">Your trusted online marketplace <br>
+              connecting local businesses with customers.</div>
+          </div>
+        </div>
+
+        <!-- Center: Navigation Links (Horizontal) -->
+        <div style="display:flex; gap:24px; align-items:center;">
+          <a href="../about.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;">About</a>
+        </div>
+
+        <!-- Right: Contact Info (Vertical) -->
+        <div style="display:flex; flex-direction:column; gap:6px; color:#94a3b8; font-size:0.8rem; text-align:right;">
+          <div>📧 support@digimart.lk</div>
+          <div>📞 +94 11 234 5678</div>
+          <div>📍 Colombo, Sri Lanka</div>
+        </div>
+      </div>
+      <div
+        style="border-top:1px solid #334155; margin-top:12px; padding-top:12px; text-align:center; color:#64748b; font-size:0.75rem;">
+        © 2025 DigiMart — All rights reserved
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/products.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/user-menu.js"></script>
+  <script src="../js/user-data.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      renderWishlist();
+    });
+
+    function renderWishlist() {
+      const wishlist = getWishlist();
+      const container = document.getElementById('wishlistContainer');
+      const countEl = document.getElementById('wishlistCount');
+
+      countEl.textContent = wishlist.length;
+
+      if (wishlist.length === 0) {
+        container.innerHTML = `
+        <div class="card" style="padding:48px; text-align:center;">
+          <div style="font-size:3rem; margin-bottom:16px;">💝</div>
+          <h3 style="margin-bottom:12px; color:var(--muted);">Your Wishlist is Empty</h3>
+          <p style="color:var(--muted); margin-bottom:24px;">Save your favorite products to easily find them later!</p>
+          <a href="../products.html" class="btn">Browse Products</a>
+        </div>
+      `;
+        return;
+      }
+
+      container.innerHTML = `
+      <div class="grid">
+        ${wishlist.map(productId => {
+        const product = getProductById(productId);
+        if (!product) return '';
+
+        const shop = getShopById(product.shopId);
+
+        return `
+            <div class="card product-card" style="position:relative;">
+              <button 
+                class="wishlist-btn active" 
+                onclick="toggleWishlist('${product.id}'); event.stopPropagation();"
+                style="position:absolute; top:12px; right:12px; background:white; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.1); z-index:10; font-size:1.2rem; transition: transform 0.2s;"
+                onmouseover="this.style.transform='scale(1.1)'"
+                onmouseout="this.style.transform='scale(1)'"
+                title="Remove from wishlist"
+              >
+                ❤️
+              </button>
+              
+              <a href="../product-detail.html?id=${product.id}" style="text-decoration:none; color:inherit;">
+                <img src="../${product.image}" alt="${product.name}" style="width:100%; height:180px; object-fit:cover; border-radius:8px; margin-bottom:12px;">
+                <h4 style="margin-bottom:8px; font-size:1rem;">${product.name}</h4>
+                ${shop ? `<div class="small" style="color:var(--muted); margin-bottom:8px;">by ${shop.name}</div>` : ''}
+                <div class="price" style="color:var(--primary); font-weight:700; font-size:1.1rem; margin-bottom:12px;">${formatPriceLKR(product.price)}</div>
+              </a>
+              
+              <button 
+                class="btn" 
+                style="width:100%;" 
+                onclick="addToCartFromWishlist('${product.id}'); event.stopPropagation();"
+              >
+                Add to Cart
+              </button>
+            </div>
+          `;
+      }).join('')}
+      </div>
+    `;
+    }
+
+    function toggleWishlist(productId) {
+      const wishlist = getWishlist();
+      const index = wishlist.indexOf(productId);
+
+      if (index > -1) {
+        wishlist.splice(index, 1);
+        saveWishlist(wishlist);
+        renderWishlist();
+      }
+    }
+
+    function addToCartFromWishlist(productId) {
+      addToCart(productId, 1);
+      alert('Product added to cart!');
+    }
+  </script>
+</body>
+
+</html>
