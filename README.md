@@ -1,7 +1,6 @@
 # DigiMart — E-Commerce Marketplace Platform
 
 ![DigiMart](images/logo.png)
-
 **DigiMart** is a comprehensive e-commerce marketplace platform designed to bridge the gap between local businesses and customers. It empowers small and medium enterprises to establish their digital presence while providing customers with a curated marketplace of quality products and services.
 
 ---
